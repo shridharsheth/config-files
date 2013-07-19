@@ -1,0 +1,16 @@
+[user]
+	name = shridharsheth
+	email = shridhar.sheth@gmail.com
+[core]
+	editor = vim 
+[gui]
+	recentrepo = /home/debesys/devroot/debesys
+[diff]
+    tool=meld
+[merge]
+    tool=meld
+[alias]
+	st = status
+	co = checkout
+	glog = log --graph --date-order --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	serve = !git daemon --reuseaddr --verbose --base-path=. --export-all ./.git
