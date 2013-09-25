@@ -20,7 +20,7 @@ alias gitc='git clone'
 alias gith='git help'
 #alias vim='gvim'
 
-alias envs='echo LD_LIBRARY_PATH $LD_LIBRARY_PATH;  echo PATH $PATH;  echo C_INCLUDE_PATH $C_INCLUDE_PATH; echo CPLUS_INCLUDE_PATH $CPLUS_INCLUDE_PATH; echo PYTHONPATH $PYTHONPATH'
+alias envs='echo LIBRARY_PATH $LIBRARY_PATH; echo LD_LIBRARY_PATH $LD_LIBRARY_PATH;  echo PATH $PATH;  echo C_INCLUDE_PATH $C_INCLUDE_PATH; echo CPLUS_INCLUDE_PATH $CPLUS_INCLUDE_PATH; echo PYTHONPATH $PYTHONPATH'
 alias m='make -Rr -j 8 -C `pwd | cut -d "/" -f 1,2,3,4,5`'
 alias pbin='pushd `pwd | cut -d "/" -f 1,2,3,4,5`/build/x86-64/debug/bin'
 alias pext='pushd `pwd | cut -d "/" -f 1,2,3,4,5`/ext'
@@ -33,9 +33,9 @@ alias tloc='sudo tail -f /var/log/messages'
 alias vloc='sudo gvim -nw /var/log/messages'
 alias rmvol='rm /volatile/logs/*'
 alias jtrader='/usr/java/jdk1.7.0_03/bin/java -cp JTrader.jar JTrader &'
-alias ttrader='./run python ./build/x86-64/debug/python/tt/ttrader/t_trader.py'
+alias ttrader='./run python ./build/x86-64/release/python/tt/ttrader/t_trader.py'
 alias updebesys='./run python deploy/chef/scripts/upload_debesys.py'
-
+alias cme='./run build/x86-64/release/bin/cme -f -v -l ~/var/log/debesys/ -c ~/etc/debesys/cme_oc_config.conf -m config/lbm_config_lo.xml --disable-exchange-link-download --sendrecvdir ~/var/lib/'
 function m_()
 {
     # The $@ variable contains all the arguments.

@@ -5,10 +5,10 @@
 	editor = vim 
 [gui]
 	recentrepo = /home/debesys/devroot/debesys
-[diff]
-    tool=meld
-[merge]
-    tool=meld
+#[diff]
+#    tool=meld
+#[merge]
+#    tool=meld
 [alias]
 	st = status
 	co = checkout
