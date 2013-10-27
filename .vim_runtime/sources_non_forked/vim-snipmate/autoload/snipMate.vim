@@ -7,7 +7,7 @@ let s:c = g:snipMate
 try
 	call tlib#input#List('mi', '', [])
 catch /.*/
-	echoe "you're missing tlib. See install instructions at ".expand('<sfile>:h:h').'/README.rst'
+	echoe "you're missing tlib. See install instructions at ".expand('<sfile>:h:h').'/README.md'
 endtry
 
 " match $ which doesn't follow a \
@@ -22,17 +22,18 @@ let s:c.read_snippets_cached = get(s:c, 'read_snippets_cached', {'func' : functi
 
 " if filetype is objc, cpp, cs or cu also append snippets from scope 'c'
 " you can add multiple by separating scopes by ',', see s:AddScopeAliases
-" TODO add documentation to doc/*
 let s:c.scope_aliases = get(s:c, 'scope_aliases', {})
-let s:c.scope_aliases.objc = get(s:c.scope_aliases, 'objc', 'c')
-let s:c.scope_aliases.cpp = get(s:c.scope_aliases, 'cpp', 'c')
-let s:c.scope_aliases.cu = get(s:c.scope_aliases, 'cu', 'c')
-let s:c.scope_aliases.xhtml = get(s:c.scope_aliases, 'xhtml', 'html')
-let s:c.scope_aliases.html = get(s:c.scope_aliases, 'html', 'javascript')
-let s:c.scope_aliases.php = get(s:c.scope_aliases, 'php', 'php,html,javascript')
-let s:c.scope_aliases.ur = get(s:c.scope_aliases, 'ur', 'html,javascript')
-let s:c.scope_aliases.mxml = get(s:c.scope_aliases, 'mxml', 'actionscript')
-let s:c.scope_aliases.eruby = get(s:c.scope_aliases, 'eruby', 'eruby-rails,html')
+if !exists('g:snipMate_no_default_aliases') || !g:snipMate_no_default_aliases
+	let s:c.scope_aliases.objc = get(s:c.scope_aliases, 'objc', 'c')
+	let s:c.scope_aliases.cpp = get(s:c.scope_aliases, 'cpp', 'c')
+	let s:c.scope_aliases.cu = get(s:c.scope_aliases, 'cu', 'c')
+	let s:c.scope_aliases.xhtml = get(s:c.scope_aliases, 'xhtml', 'html')
+	let s:c.scope_aliases.html = get(s:c.scope_aliases, 'html', 'javascript')
+	let s:c.scope_aliases.php = get(s:c.scope_aliases, 'php', 'php,html,javascript')
+	let s:c.scope_aliases.ur = get(s:c.scope_aliases, 'ur', 'html,javascript')
+	let s:c.scope_aliases.mxml = get(s:c.scope_aliases, 'mxml', 'actionscript')
+	let s:c.scope_aliases.eruby = get(s:c.scope_aliases, 'eruby', 'eruby-rails,html')
+endif
 
 " set this to "\<tab>" to make snipmate not swallow tab (make sure to not have
 " expandtab set). Remember that you can always enter tabs by <c-v> <tab> then
@@ -121,8 +122,9 @@ endfunction
 fun! s:ProcessSnippet(snip)
 	let snippet = a:snip
 
-	if exists('g:snipmate_content_visual')
-		let visual = g:snipmate_content_visual | unlet g:snipmate_content_visual
+	if exists('b:snipmate_content_visual')
+		let visual = b:snipmate_content_visual
+		unlet b:snipmate_content_visual
 	else
 		let visual = ''
 	endif
@@ -167,8 +169,20 @@ fun! s:ProcessSnippet(snip)
 		let i += 1
 	endw
 
+	" Add ${0} tab stop if found
+	if snippet =~ s:d . '{0'
+		let snippet = substitute(snippet, s:d.'{0', '${'.i, '')
+		let s = matchstr(snippet, s:d.'{'.i.':\zs.\{-}\ze}')
+		if s != ''
+			let snippet = substitute(snippet, s:d.'0', '$'.i, 'g')
+			let snippet = substitute(snippet, s:d.i, s.'&', 'g')
+		endif
+	else
+		let snippet .= '${'.i.'}'
+	endif
+
 	if &et " Expand tabs to spaces if 'expandtab' is set.
-		return substitute(snippet, '\t', repeat(' ', &sts ? &sts : &sw), 'g')
+		return substitute(snippet, '\t', repeat(' ', (&sts > 0) ? &sts : &sw), 'g')
 	endif
 	return snippet
 endf
