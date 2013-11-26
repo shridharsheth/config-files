@@ -20,7 +20,7 @@ alias gitc='git clone'
 alias gith='git help'
 #alias vim='gvim'
 
-alias envs='echo LD_LIBRARY_PATH $LD_LIBRARY_PATH;  echo PATH $PATH;  echo C_INCLUDE_PATH $C_INCLUDE_PATH; echo CPLUS_INCLUDE_PATH $CPLUS_INCLUDE_PATH; echo PYTHONPATH $PYTHONPATH'
+alias envs='echo LIBRARY_PATH $LIBRARY_PATH; echo LD_LIBRARY_PATH $LD_LIBRARY_PATH;  echo PATH $PATH;  echo C_INCLUDE_PATH $C_INCLUDE_PATH; echo CPLUS_INCLUDE_PATH $CPLUS_INCLUDE_PATH; echo PYTHONPATH $PYTHONPATH'
 alias m='make -Rr -j 8 -C `pwd | cut -d "/" -f 1,2,3,4,5`'
 alias pbin='pushd `pwd | cut -d "/" -f 1,2,3,4,5`/build/x86-64/debug/bin'
 alias pext='pushd `pwd | cut -d "/" -f 1,2,3,4,5`/ext'
@@ -33,8 +33,16 @@ alias tloc='sudo tail -f /var/log/messages'
 alias vloc='sudo gvim -nw /var/log/messages'
 alias rmvol='rm /volatile/logs/*'
 alias jtrader='/usr/java/jdk1.7.0_03/bin/java -cp JTrader.jar JTrader &'
-alias ttrader='./run python ./build/x86-64/debug/python/tt/ttrader/t_trader.py'
-alias updebesys='./run python deploy/chef/scripts/upload_debesys.py'
+alias ttrader='./run python ./build/x86-64/debug/python/tt/ttrader/t_trader.py --lbm-config /home/shridhar/etc/debesys/lbm_lo.conf -c ~/etc/debesys/T_Trader.conf -l ~/var/log/debesys/'
+alias cme='./run build/x86-64/release/bin/cme -f -v -l ~/var/log/debesys/ -c ~/etc/debesys/cme_oc_config.conf -m config/lbm_config_lo.xml --disable-exchange-link-download --sendrecvdir ~/var/lib/'
+alias backchannel='./run ttus_lbm_pub -v --lbm-config /home/shridhar/etc/debesys/lbm_lo.conf --config /home/shridhar/etc/debesys/ttus_lbm_pub.conf --stdout'
+alias bookie='./run bookie -v --lbm-config /home/shridhar/etc/debesys/lbm_lo.conf --config /home/shridhar/etc/debesys/bookie.conf --stdout'
+alias ziplw='zip -r ledgerweb.zip application.py requirements.txt tt/messaging/ tt/ledger/ tt/__init__.py'
+
+function upd()
+{
+    ./run python deploy/chef/scripts/upload_debesys.py --tag $1 
+}
 
 function m_()
 {
@@ -48,9 +56,8 @@ function m_()
 }
 alias m=m_
 
-export PATH=$PATH:/opt/meld-1.6.1/bin/
+export PATH=$PATH:/opt/meld-1.6.1/bin/:/home/shridhar/opt/idea-IC-129.1359/bin/:/home/shridhar/cmake-2.8.12-Linux-i386/bin/:/home/shridhar/ext/linux/x86-64/release/opt/gcc-4.8.1/bin/
 export EDITOR=vi
 export AWS_ACCESS_KEY_ID=AKIAIR336Z6UDB6KPPMQ
 export AWS_SECRET_ACCESS_KEY=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
-# User specific aliases and functions
 
