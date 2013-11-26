@@ -11,8 +11,8 @@ function DelGitBranch {
 }
 
 GIT_PS1_SHOWDIRTYSTATE=true
-. ~/.git-prompt.sh
-. ~/.git-completion.sh
+. ~/git-prompt.sh
+. ~/git-completion.sh
 
 export PS1="\h \[\033[1;30m\]\$(__git_ps1) \[\033[0;0m\]\w >"
 #alias for git
