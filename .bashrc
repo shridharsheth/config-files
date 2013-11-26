@@ -44,6 +44,12 @@ function upd()
     ./run python deploy/chef/scripts/upload_debesys.py --tag $1 
 }
 
+alias ttrader='./run python ./build/x86-64/debug/python/tt/ttrader/t_trader.py'
+alias updebesys='./run python deploy/chef/scripts/upload_debesys.py'
+
+alias ttrader='./run python ./build/x86-64/release/python/tt/ttrader/t_trader.py'
+alias updebesys='./run python deploy/chef/scripts/upload_debesys.py'
+alias cme='./run build/x86-64/release/bin/cme -f -v -l ~/var/log/debesys/ -c ~/etc/debesys/cme_oc_config.conf -m config/lbm_config_lo.xml --disable-exchange-link-download --sendrecvdir ~/var/lib/'
 function m_()
 {
     # The $@ variable contains all the arguments.

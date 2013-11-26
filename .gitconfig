@@ -9,6 +9,7 @@
     tool=meld
 [merge]
     tool=meld
+	conflictstyle = diff3
 [alias]
 	st = status
 	co = checkout
