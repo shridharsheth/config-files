@@ -14,6 +14,8 @@ GIT_PS1_SHOWDIRTYSTATE=true
 . ~/git-prompt.sh
 . ~/git-completion.sh
 
+export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LIBRARY_PATH
+
 export PS1="\h \[\033[1;30m\]\$(__git_ps1) \[\033[0;0m\]\w >"
 #alias for git
 alias gitc='git clone'
@@ -33,11 +35,20 @@ alias tloc='sudo tail -f /var/log/messages'
 alias vloc='sudo gvim -nw /var/log/messages'
 alias rmvol='rm /volatile/logs/*'
 alias jtrader='/usr/java/jdk1.7.0_03/bin/java -cp JTrader.jar JTrader &'
-alias ttrader='./run python ./build/x86-64/debug/python/tt/ttrader/t_trader.py --lbm-config /home/shridhar/etc/debesys/lbm_lo.conf -c ~/etc/debesys/T_Trader.conf -l ~/var/log/debesys/'
+alias ttrader='./run python ./build/x86-64/debug/python/tt/ttrader/t_trader.py --lbm-config /etc/debesys/lbm_lo.conf -c ~/etc/debesys/T_Trader.conf -l ~/var/log/debesys/'
 alias cme='./run build/x86-64/release/bin/cme -f -v -l ~/var/log/debesys/ -c ~/etc/debesys/cme_oc_config.conf -m config/lbm_config_lo.xml --disable-exchange-link-download --sendrecvdir ~/var/lib/'
-alias backchannel='./run ttus_lbm_pub -v --lbm-config /home/shridhar/etc/debesys/lbm_lo.conf --config /home/shridhar/etc/debesys/ttus_lbm_pub.conf --stdout'
-alias bookie='./run bookie -v --lbm-config /home/shridhar/etc/debesys/lbm_lo.conf --config /home/shridhar/etc/debesys/bookie.conf --stdout'
-alias ziplw='zip -r ledgerweb.zip application.py requirements.txt tt/messaging/ tt/ledger/ tt/__init__.py'
+alias backchannel='./run ttus_lbm_pub --lbm-config /etc/debesys/lbm_lo.conf --config /etc/debesys/ttus_lbm_pub.conf --stdout -v --disable-zookeeper'
+alias bookie='./run bookie -v --lbm-config /etc/debesys/lbm_lo.conf --config /etc/debesys/bookie.conf --stdout'
+#alias ziplw='zip -r ledgerweb.zip application.py requirements.txt tt/messaging/ tt/ledger/ tt/__init__.py'
+
+function ziplw()
+{
+    build_dir = 'build/x86-64/release/python/'
+    pushd .
+    cd build/x86-64/release/python/
+    zip -r ~/ledgerweb.zip application.py requirements.txt .ebextensions tt/messaging/ tt/ledger/ tt/__init__.py
+    popd
+}
 
 function upd()
 {
@@ -62,8 +73,7 @@ function m_()
 }
 alias m=m_
 
-export PATH=$PATH:/opt/meld-1.6.1/bin/:/home/shridhar/opt/idea-IC-129.1359/bin/:/home/shridhar/cmake-2.8.12-Linux-i386/bin/:/home/shridhar/ext/linux/x86-64/release/opt/gcc-4.8.1/bin/
+export PATH=$PATH:/opt/meld-1.6.1/bin/:/opt/idea-IC-133.124/bin/:
 export EDITOR=vi
-export AWS_ACCESS_KEY_ID=AKIAIR336Z6UDB6KPPMQ
-export AWS_SECRET_ACCESS_KEY=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
-
+export JAVA_HOME=/usr/java/jdk1.7.0_45/
+sh ./awskeys.sh
